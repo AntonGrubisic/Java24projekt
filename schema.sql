@@ -7,13 +7,6 @@ create table country
     constraint pk_country primary key (country_code)
 );
 
-insert into country (country_code, country_name)
-values ('dk', 'Denmark'),
-       ('fi', 'Finland'),
-       ('is', 'Iceland'),
-       ('no', 'Norway'),
-       ('se', 'Sweden');
-
 create table city
 (
     id           bigint auto_increment not null,
