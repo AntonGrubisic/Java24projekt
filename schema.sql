@@ -7,47 +7,61 @@ create table country
     constraint pk_country primary key (country_code)
 );
 
-insert into country (country_code, country_name)
-values ('dk', 'Denmark'),
-       ('fi', 'Finland'),
-       ('is', 'Iceland'),
-       ('no', 'Norway'),
-       ('se', 'Sweden');
-
 create table city
 (
     id           bigint auto_increment not null,
+    country_name varchar(255)          not null,
     city_name    varchar(255)          not null,
     population   int                   not null,
-    country_code varchar(255)          not null,
-    constraint pk_city primary key (id),
-    constraint fk_city_country foreign key (country_code) references country (country_code)
+    landmark     varchar(255)          not null,
+    constraint pk_city primary key (id)
+
 );
 
-insert into city (city_name, population, country_code)
+insert into city (country_name, city_name, population, landmark)
 values
-    ('Copenhagen', 602481, 'dk'),
-    ('Aarhus', 282910, 'dk'),
-    ('Odense', 179601, 'dk'),
-    ('Helsinki', 631695, 'fi'),
-    ('Espoo', 283632, 'fi'),
-    ('Tampere', 238140, 'fi'),
-    ('Reykjavik', 131136, 'is'),
-    ('Kopavogur', 36875, 'is'),
-    ('Hafnarfjordur', 29272, 'is'),
-    ('Oslo', 634293, 'no'),
-    ('Bergen', 278556, 'no'),
-    ('Stavanger', 144699, 'no'),
-    ('Stockholm', 975551, 'se'),
-    ('Gothenburg', 583056, 'se'),
-    ('Malmo', 347949, 'se'),
-    ('Uppsala', 233839, 'se'),
-    ('Västerås', 154049, 'se'),
-    ('Örebro', 156381, 'se'),
-    ('Linköping', 164616, 'se'),
-    ('Helsingborg', 149280, 'se'),
-    ('Jönköping', 141081, 'se'),
-    ('Norrköping', 143478, 'se'),
-    ('Lund', 125154, 'se'),
-    ('Umeå', 130224, 'se'),
-    ('Gävle', 102904, 'se');
+    ('Albanien', 'Tirana', 2800000, 'Berat'),
+    ('Andorra', 'Andorra la Vella', 77000, 'Caldea Spa'),
+    ('Belgien', 'Bryssel', 11500000, 'Grand Place'),
+    ('Bosnien och Hercegovina', 'Sarajevo', 3300000, 'Stari Most-bron'),
+    ('Bulgarien', 'Sofia', 6900000, 'Rilaklostret'),
+    ('Danmark', 'Köpenhamn', 5800000, 'Tivoli'),
+    ('Estland', 'Tallinn', 1300000, 'Gamla stan'),
+    ('Finland', 'Helsingfors', 5500000, 'Sveaborg'),
+    ('Frankrike', 'Paris', 65000000, 'Eiffeltornet'),
+    ('Grekland', 'Aten', 10400000, 'Akropolis'),
+    ('Irland', 'Dublin', 4900000, 'Cliffs of Moher'),
+    ('Island', 'Reykjavik', 341000, 'Blå lagunen'),
+    ('Italien', 'Rom', 60400000, 'Colosseum'),
+    ('Kosovo', 'Pristina', 1800000, 'Visoki Decani-klostret'),
+    ('Kroatien', 'Zagreb', 4100000, 'Plitvicesjöarna'),
+    ('Lettland', 'Riga', 1900000, 'Gamla stan'),
+    ('Liechtenstein', 'Vaduz', 38000, 'Vaduz slott'),
+    ('Litauen', 'Vilnius', 2800000, 'Korskullen'),
+    ('Luxemburg', 'Luxemburg', 625000, 'Casemates du Bock'),
+    ('Malta', 'Valletta', 514000, 'Grand Harbour'),
+    ('Moldavien', 'Chisinau', 2600000, 'Orheiul Vechi'),
+    ('Monaco', 'Monaco', 39000, 'Monte Carlo Casino'),
+    ('Montenegro', 'Podgorica', 622000, 'Kotorbukten'),
+    ('Nederländerna', 'Amsterdam', 17400000, 'Anne Franks hus'),
+    ('Nordmakedonien', 'Skopje', 2100000, 'Ohridsjön'),
+    ('Norge', 'Oslo', 5400000, 'Geirangerfjorden'),
+    ('Polen', 'Warszawa', 37800000, 'Gamla stan i Kraków'),
+    ('Portugal', 'Lissabon', 10300000, 'Torre de Belém'),
+    ('Rumänien', 'Bukarest', 19100000, 'Bran Castle'),
+    ('San Marino', 'San Marino', 34000, 'Guaita-tornet'),
+    ('Schweiz', 'Bern', 8700000, 'Matterhorn'),
+    ('Serbien', 'Belgrad', 6800000, 'Kalemegdan-fästningen'),
+    ('Slovakien', 'Bratislava', 5400000, 'Bratislava slott'),
+    ('Slovenien', 'Ljubljana', 2100000, 'Bledsjön'),
+    ('Spanien', 'Madrid', 47300000, 'Alhambra'),
+    ('Storbritannien', 'London', 67200000, 'Big Ben'),
+    ('Sverige', 'Stockholm', 10500000, 'Kungliga slottet'),
+    ('Tjeckien', 'Prag', 10700000, 'Karlsbron'),
+    ('Tyskland', 'Berlin', 83200000, 'Brandenburger Tor'),
+    ('Ukraina', 'Kiev', 43300000, 'Sofiakatedralen'),
+    ('Ungern', 'Budapest', 9700000, 'Parlamentet'),
+    ('Vatikanstaten', 'Vatikanstaten', 800, 'Peterskyrkan'),
+    ('Vitryssland', 'Minsk', 9300000, 'Nesvizh slott'),
+    ('Österrike', 'Wien', 8900000, 'Schönbrunn slott'),
+    ('Ryssland', 'Moskva', 143400000, 'Röda torget');
