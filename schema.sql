@@ -47,6 +47,16 @@ CREATE TABLE Answer (
     FOREIGN KEY(questionId) REFERENCES Question(questionId)
 );
 
+
+-- lägga till användare
+INSERT INTO User (userId, userName)
+VALUES (1, 'Anna'),
+       (2, 'Björn'),
+       (3, 'Carla');
+
+
+
+
 insert into Country (countryname, countryCapital, countryPopulation, landmark)
 values
     ('Albanien', 'Tirana', 2800000, 'Berat'),
@@ -94,3 +104,105 @@ values
     ('Vitryssland', 'Minsk', 9300000, 'Nesvizh slott'),
     ('Österrike', 'Wien', 8900000, 'Schönbrunn slott'),
     ('Ryssland', 'Moskva', 143400000, 'Röda torget');
+
+
+
+     -- fråga 1
+        INSERT INTO Question (questionText, countryId)
+    VALUES ('Vad är huvudstaden i Albanien?', 1);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (1, 'Tirana', 1),
+       (1, 'Sarajevo', 0),
+       (1, 'Aten', 0),
+       (1, 'Paris', 0);
+
+-- fråga 2
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vad är huvudstaden i Belgien?', 2);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (2, 'Bryssel', 1),
+       (2, 'Amsterdam', 0),
+       (2, 'Paris', 0),
+       (2, 'Berlin', 0);
+
+-- fråga 3
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vad är huvudstaden i Frankrike?', 3);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (3, 'Paris', 1),
+       (3, 'Rom', 0),
+       (3, 'Berlin', 0),
+       (3, 'Madrid', 0);
+
+-- fråga 4
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vad är befolkningen i Grekland?', 4);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (4, '10400000', 1),
+       (4, '25000000', 0),
+       (4, '5000000', 0),
+       (4, '7000000', 0);
+
+-- fråga 5
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken landmärke finns i Rom?', 5);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (5, 'Colosseum', 1),
+       (5, 'Big Ben', 0),
+       (5, 'Eiffeltornet', 0),
+       (5, 'Frihetsgudinnan', 0);
+
+-- fråga 6
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vad är huvudstaden i Spanien?', 6);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (6, 'Madrid', 1),
+       (6, 'Barcelona', 0),
+       (6, 'Lissabon', 0),
+       (6, 'Paris', 0);
+
+ -- fråga 7
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vad är huvudstaden i Sverige?', 7);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (7, 'Stockholm', 1),
+       (7, 'Oslo', 0),
+       (7, 'Köpenhamn', 0),
+       (7, 'Helsingfors', 0);
+
+-- fråga 8
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vad är huvudstaden i Ryssland?', 8);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (8, 'Moskva', 1),
+       (8, 'Sankt Petersburg', 0),
+       (8, 'Kiev', 0),
+       (8, 'Belgrad', 0);
+
+-- fråga 9
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken landmärke finns i Storbritannien?', 9);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (9, 'Big Ben', 1),
+       (9, 'Eiffeltornet', 0),
+       (9, 'Colosseum', 0),
+       (9, 'Frihetsgudinnan', 0);
+
+-- fråga 10
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilket land är känt för Eiffeltornet?', 10);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (10, 'Frankrike', 1),
+       (10, 'Italien', 0),
+       (10, 'Tyskland', 0),
+       (10, 'Spanien', 0);
