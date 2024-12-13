@@ -1,5 +1,5 @@
 use demo;
-
+use test;
 create table country
 (
     country_code varchar(255) not null,
