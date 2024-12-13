@@ -40,7 +40,7 @@ CREATE TABLE Answer (
     FOREIGN KEY(questionId) REFERENCES Question(questionId)
 );
 
-insert into Country (countryname, countryCapital, Country.countryPopulation, landmark)
+insert into Country (countryname, countryCapital, countryPopulation, landmark)
 values
     ('Albanien', 'Tirana', 2800000, 'Berat'),
     ('Andorra', 'Andorra la Vella', 77000, 'Caldea Spa'),
