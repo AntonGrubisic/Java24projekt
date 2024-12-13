@@ -1,6 +1,5 @@
 package se.iths.java24;
 
-import se.iths.java24.entity.City;
 import se.iths.java24.repository.CityRepository;
 import se.iths.java24.repository.CountryRepository;
 

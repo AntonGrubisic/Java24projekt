@@ -7,12 +7,19 @@ CREATE TABLE User
 );
 
 CREATE TABLE Country (
-    countryId INTEGER PRIMARY KEY,
+    countryId INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     countryName VARCHAR(255),
     countryPopulation INTEGER,
     countryCapital VARCHAR(255),
     landmark VARCHAR(255)
 );
+
+DROP TABLE Question;
+
+DROP TABLE Country;
+
+DROP TABLE Answer;
+
 
 CREATE TABLE QuizSession (
     quizSessionId INTEGER PRIMARY KEY,
