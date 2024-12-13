@@ -1,21 +1,43 @@
 use demo;
 
-create table country
+CREATE TABLE User
 (
-    country_code varchar(255) not null,
-    country_name varchar(255) null,
-    constraint pk_country primary key (country_code)
+    userId INTEGER PRIMARY KEY,
+    userName VARCHAR(255)
 );
 
-create table city
-(
-    id           bigint auto_increment not null,
-    country_name varchar(255)          not null,
-    city_name    varchar(255)          not null,
-    population   int                   not null,
-    landmark     varchar(255)          not null,
-    constraint pk_city primary key (id)
+CREATE TABLE Country (
+    countryId INTEGER PRIMARY KEY,
+    countryName VARCHAR(255),
+    countryPopulation INTEGER,
+    countryCapital VARCHAR(255),
+    landmark VARCHAR(255)
+);
 
+CREATE TABLE QuizSession (
+    quizSessionId INTEGER PRIMARY KEY,
+    userId INTEGER,
+    questionId INTEGER,
+    answerId INTEGER,
+    FOREIGN KEY(userId)  REFERENCES User(userId),
+    FOREIGN KEY(questionId)  REFERENCES Question(questionId),
+    FOREIGN KEY(answerId)  REFERENCES Answer(answerId)
+);
+
+CREATE TABLE Question
+(
+    questionId INTEGER PRIMARY KEY,
+    questionText VARCHAR(255),
+    countryId INTEGER,
+    FOREIGN KEY (countryId) REFERENCES Country (countryId)
+);
+
+CREATE TABLE Answer (
+    answerId INTEGER PRIMARY KEY,
+    questionId INTEGER,
+    optionText VARCHAR(255),
+    isCorrect TINYINT(1) NOT NULL,
+    FOREIGN KEY(questionId) REFERENCES Question(questionId)
 );
 
 insert into city (country_name, city_name, population, landmark)
