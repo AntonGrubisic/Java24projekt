@@ -6,6 +6,7 @@ CREATE TABLE User
     userName VARCHAR(255)
 );
 
+
 CREATE TABLE Country (
     countryId INTEGER PRIMARY KEY,
     countryName VARCHAR(255),
