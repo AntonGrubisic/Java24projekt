@@ -6,6 +6,10 @@
 
         <class>se.iths.java24.entity.Country</class>
         <class>se.iths.java24.entity.City</class>
+        <class>se.iths.java24.entity.User</class>
+        <class>se.iths.java24.entity.Question</class>
+        <class>se.iths.java24.entity.Answer</class>
+        <class>se.iths.java24.entity.QuizSession</class>
 
         <properties>
             <!-- Database connection settings -->

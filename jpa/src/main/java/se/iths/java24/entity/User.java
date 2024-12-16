@@ -15,7 +15,7 @@ public class User {
     @Column
     private Integer userScore;
 
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 

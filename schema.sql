@@ -197,3 +197,5 @@ VALUES (10, 'Frankrike', 1),
        (10, 'Italien', 0),
        (10, 'Tyskland', 0),
        (10, 'Spanien', 0);
+
+SELECT * FROM User;

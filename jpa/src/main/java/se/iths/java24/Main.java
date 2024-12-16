@@ -223,6 +223,7 @@ public class Main {
         });
     }
 
+    //
 
         //View statistic
         public static void viewStatistics (EntityManager em){
