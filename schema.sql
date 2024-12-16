@@ -1,31 +1,37 @@
 use demo;
 
-CREATE TABLE User
-(
-    userId INTEGER PRIMARY KEY,
-    userName VARCHAR(255)
-);
+CREATE TABLE User(
+    userId INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    userName VARCHAR(255) UNIQUE,
+    userScore INTEGER NOT NULL
 
-ALTER TABLE User ADD COLUMN userScore INTEGER;
+);
 
 CREATE TABLE Country (
     countryId INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    countryName VARCHAR(255),
+    countryName VARCHAR(255) UNIQUE,
     countryPopulation INTEGER,
     countryCapital VARCHAR(255),
     landmark VARCHAR(255)
 );
 
-DROP TABLE Question;
+CREATE TABLE Question(
+    questionId INTEGER PRIMARY KEY AUTO_INCREMENT,
+    questionText VARCHAR(255),
+    countryId INTEGER,
+    FOREIGN KEY (countryId) REFERENCES Country (countryId)
+);
 
-DROP TABLE Country;
-
-DROP TABLE Answer;
-
+CREATE TABLE Answer (
+    answerId INTEGER PRIMARY KEY AUTO_INCREMENT,
+    questionId INTEGER,
+    optionText VARCHAR(255),
+    isCorrect TINYINT(1) NOT NULL,
+    FOREIGN KEY(questionId) REFERENCES Question(questionId)
+);
 
 CREATE TABLE QuizSession (
-    quizSessionId INTEGER PRIMARY KEY,
-    score INTEGER,
+    quizSessionId INTEGER PRIMARY KEY AUTO_INCREMENT,
     userId INTEGER,
     questionId INTEGER,
     answerId INTEGER,
@@ -34,24 +40,8 @@ CREATE TABLE QuizSession (
     FOREIGN KEY(answerId)  REFERENCES Answer(answerId)
 );
 
-CREATE TABLE Question(
-    questionId INTEGER PRIMARY KEY,
-    questionText VARCHAR(255),
-    countryId INTEGER,
-    FOREIGN KEY (countryId) REFERENCES Country (countryId)
-);
-
-CREATE TABLE Answer (
-    answerId INTEGER PRIMARY KEY,
-    questionId INTEGER,
-    optionText VARCHAR(255),
-    isCorrect TINYINT(1) NOT NULL,
-    FOREIGN KEY(questionId) REFERENCES Question(questionId)
-);
-
-
 -- lägga till användare
-INSERT INTO User (userId, userName)
+INSERT INTO User (userId, userName )
 VALUES (1, 'Anna'),
        (2, 'Björn'),
        (3, 'Carla');
@@ -59,8 +49,8 @@ VALUES (1, 'Anna'),
 
 
 
-insert into Country (countryname, countryCapital, countryPopulation, landmark)
-values
+INSERT INTO Country (countryname, countryCapital, countryPopulation, landmark)
+VALUES
     ('Albanien', 'Tirana', 2800000, 'Berat'),
     ('Andorra', 'Andorra la Vella', 77000, 'Caldea Spa'),
     ('Belgien', 'Bryssel', 11500000, 'Grand Place'),
@@ -108,10 +98,9 @@ values
     ('Ryssland', 'Moskva', 143400000, 'Röda torget');
 
 
-
-     -- fråga 1
-        INSERT INTO Question (questionText, countryId)
-    VALUES ('Vad är huvudstaden i Albanien?', 1);
+-- fråga 1
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vad är huvudstaden i Albanien?', 1);
 
 INSERT INTO Answer (questionId, optionText, isCorrect)
 VALUES (1, 'Tirana', 1),

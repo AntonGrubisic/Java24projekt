@@ -12,6 +12,9 @@ public class User {
     @Column(nullable = false)
     private String userName;
 
+    @Column
+    private Integer userScore;
+
     public Long getUserId() {
         return userId;
     }
@@ -28,16 +31,16 @@ public class User {
         this.userName = userName;
     }
 
-    public void getScore(){
-        return score();
+    public Integer getUserScore(){
+        return userScore;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setUserScore(Integer userScore) {
+        this.userScore = userScore;
     }
 
     @Override
     public String toString() {
-        return "User{id=" + userId + ", name='" + userName + "', score=" + score + "}";
+        return "AnvändarID: " + userId + ", Namn: " + userName + ", Poäng: " + userScore + ".";
     }
 }

@@ -20,6 +20,7 @@ public class JPAUtil {
     }
 
     public static void inTransaction(Consumer<EntityManager> work) {
+        EntityManager em = JPAUtil.getEntityManager();
         try (EntityManager entityManager = JPAUtil.getEntityManager()) {
             EntityTransaction transaction = entityManager.getTransaction();
             try {
@@ -31,6 +32,8 @@ public class JPAUtil {
                     transaction.rollback();
                 }
                 throw e;
+            } finally {
+                em.close(); // Stäng EntityManager
             }
         }
     }
