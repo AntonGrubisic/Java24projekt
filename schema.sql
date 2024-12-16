@@ -6,6 +6,8 @@ CREATE TABLE User
     userName VARCHAR(255)
 );
 
+ALTER TABLE User ADD COLUMN userScore INTEGER;
+
 CREATE TABLE Country (
     countryId INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     countryName VARCHAR(255),
@@ -23,6 +25,7 @@ DROP TABLE Answer;
 
 CREATE TABLE QuizSession (
     quizSessionId INTEGER PRIMARY KEY,
+    score INTEGER,
     userId INTEGER,
     questionId INTEGER,
     answerId INTEGER,
@@ -31,8 +34,7 @@ CREATE TABLE QuizSession (
     FOREIGN KEY(answerId)  REFERENCES Answer(answerId)
 );
 
-CREATE TABLE Question
-(
+CREATE TABLE Question(
     questionId INTEGER PRIMARY KEY,
     questionText VARCHAR(255),
     countryId INTEGER,
