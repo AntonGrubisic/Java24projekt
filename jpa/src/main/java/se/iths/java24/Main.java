@@ -1,10 +1,13 @@
 package se.iths.java24;
 
 import jakarta.persistence.EntityManager;
-import se.iths.java24.entity.Country;
-import se.iths.java24.entity.QuizSession;
 import se.iths.java24.entity.User;
-import java.sql.Connection;
+import se.iths.java24.entity.manager.CityManager;
+import se.iths.java24.entity.manager.QuizManager;
+import se.iths.java24.entity.manager.UserManager;
+import se.iths.java24.entity.manager.CountryManager;
+import se.iths.java24.entity.manager.StatisticsManager;
+
 import java.util.Scanner;
 
 import static se.iths.java24.JPAUtil.getEntityManager;
@@ -24,33 +27,31 @@ public class Main {
             printMenu();
             String choice = scanner.nextLine();
             switch (choice) {
-                case "0":
+                case "1":
+                    UserManager.userMenu(em, scanner);
+                    //addUser(em);
+                    break;
+                case "2":
+                    CountryManager.countryMenu(em, scanner);
+                    break;
+                case "3":
+                    CityManager.cityMenu(em, scanner);
+                    break;
+                case "4":
+                    QuizManager.QuizMenu(em, scanner);
+                    break;
+                case "5":
+                    StatisticsManager.viewStatistics(em);
+                    break;
+                case "6":
                     scanner.close();
                     System.out.println("Stänger applikationen...");
                     quit = true;
                     break;
-                case "1":
-                    addUser(em);
-                    break;
-                case "2":
-                    updateUser(em);
-                    break;
-                case "3":
-                    deleteUser(em);
-                    break;
-                case "4":
-                    showUsers(em);
-                    break;
-                case "5":
-                    startQuiz(em);
-                    break;
-                case "6":
-                    viewStatistics(em);
-                    break;
 
 
                 default:
-                    System.out.println();
+                    System.out.println("Ogiltigt val, försök igen.");
             }
         }
     }
@@ -58,76 +59,13 @@ public class Main {
     private static void printMenu() {
         System.out.println("Välj nedan: ");
         System.out.println("""
-                0 - Stäng applikationen
-                1 - Lägg till användare
-                2 - Uppdatera användare
-                3 - Ta bort användare
-                4 - Visa alla användare
-                5 - Starta nytt Quiz
-                6 - Visa statistik
+                1 - Hantera användare
+                2 - Hantera länder
+                3 - Hantera städer
+                4 - Starta nytt Quiz
+                5 - Visa statistik
+                6 - Stäng applikationen
                 """);
-
-    }
-
-    // Adding new user to database
-    public static void addUser(EntityManager em) {
-        System.out.println("Enter your name: ");
-        String name = scanner.nextLine();
-        //int score = 0;
-        User user = new User();
-        user.setUserName(name);
-        user.setUserScore(0);
-
-        inTransaction(entityManager -> {
-            entityManager.persist(user);
-        });
-    }
-
-    //Update user
-    public static void updateUser(EntityManager em) {
-        System.out.println("Skriv in ditt id: ");
-        Long userId = scanner.nextLong();
-        scanner.nextLine();
-
-        inTransaction(entityManager -> {
-            User user = entityManager.find(User.class, userId);
-            if (user != null) {
-                System.out.println("Skriv in ditt namn: ");
-                String newUserName = scanner.nextLine();
-                user.setUserName(newUserName);
-
-                // Om entiteten är detached kopplas den tillbaka
-                if (!entityManager.contains(user)) {
-                    user = entityManager.merge(user);
-                };
-
-                System.out.println("Användaren har uppdaterats");
-            } else
-                System.out.println("Ingen användare hittades med ID: " + userId);
-        });
-    }
-
-    //Delete user
-    public static void deleteUser(EntityManager em) {
-        System.out.println("Skriv in ditt ID: ");
-        Long userId = scanner.nextLong();
-        scanner.nextLine();
-
-        inTransaction(entityManager -> {
-            User user = entityManager.find(User.class, userId);
-            if (user != null) {
-                entityManager.remove(user);
-                System.out.println("Användare raderad");
-            } else
-                System.out.println("Ingen användare hittades med ID: " + userId);
-        });
-    }
-
-    //Show all users
-    public static void showUsers(EntityManager em) {
-        var query = em.createQuery("SELECT u FROM User u", User.class);
-        var users = query.getResultList();
-        users.forEach(System.out::println);
 
     }
 
@@ -222,17 +160,4 @@ public class Main {
             }
         });
     }
-
-    //
-
-        //View statistic
-        public static void viewStatistics (EntityManager em){
-            System.out.println("Visar statistik... ");
-
-            em.createQuery("SELECT u FROM User u", User.class)
-                    .getResultList()
-                    .forEach(user -> {
-                        System.out.println("Användare: " + user.getUserName() + " | Poäng: " + user.getUserScore());
-                    });
-        }
-    }
+}

@@ -1,42 +1,27 @@
 package se.iths.java24.entity;
 
+
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Table(name = "country", schema = "demo")
-@NamedEntityGraph(name = "Country.cities",
-        attributeNodes = @NamedAttributeNode("cities"))
+@Table(name = "Country")
 public class Country {
     @Id
-    @Column(name = "country_code", nullable = false)
-    private String countryCode;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long countryId;
 
-    @Column(name = "country_name")
     private String countryName;
+    private String countryCapital;
+    private Integer countryPopulation;
+    private String landmark;
 
-    @Transient
-    private String threeLetterName;
-
-    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
-    private List<City> cities = new ArrayList<>();
-
-    public List<City> getCities() {
-        return cities;
-    }
-    public String getThreeLetterName() {
-        return threeLetterName;
+    // Getters and Setters
+    public Long getCountryId() {
+        return countryId;
     }
 
-
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public void setCountryId(Long countryId) {
+        this.countryId = countryId;
     }
 
     public String getCountryName() {
@@ -47,18 +32,37 @@ public class Country {
         this.countryName = countryName;
     }
 
-    @Override
-    public String toString() {
-        return "Country{" +
-               "countryCode='" + countryCode + '\'' +
-               ", countryName='" + countryName + '\'' +
-               ", threeLetterName='" + threeLetterName + '\'' +
-               ", cities=" + cities +
-               '}';
+    public String getCountryCapital() {
+        return countryCapital;
     }
 
-    @PostLoad
-    public void postLoad() {
-        threeLetterName = countryName.substring(0, 3);
+    public void setCountryCapital(String countryCapital) {
+        this.countryCapital = countryCapital;
     }
+
+    public Integer getCountryPopulation() {
+        return countryPopulation;
+    }
+
+    public void setCountryPopulation(Integer countryPopulation) {
+        this.countryPopulation = countryPopulation;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
+    @Override
+    public String toString() {
+        return "Land: " + countryName +
+                ", Huvudstad: " + countryCapital +
+                ", Befolkning: " + countryPopulation +
+                ", Landmärke: " + landmark;
+    }
+
+
 }

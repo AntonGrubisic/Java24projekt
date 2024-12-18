@@ -50,8 +50,11 @@ public class City {
 
     public void setCountry(Country country) {
         this.country = country;
-        country.getCities().add(this);
+
     }
+
+
+
 
     @Override
     public String toString() {
@@ -59,6 +62,7 @@ public class City {
                 "id=" + id +
                 ", cityName='" + cityName + '\'' +
                 ", population=" + population +
+                ", country=" + country +
                 '}';
     }
 }
