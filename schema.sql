@@ -1,10 +1,18 @@
 use demo;
 
+
 CREATE TABLE User(
     userId INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     userName VARCHAR(255) UNIQUE,
     userScore INTEGER NOT NULL
 
+);
+
+CREATE TABLE Continent (
+    continentId INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    continentName VARCHAR (255),
+    continentCountries INTEGER,
+    continentSize INTEGER
 );
 
 CREATE TABLE Country (
@@ -97,7 +105,7 @@ VALUES
     ('Österrike', 'Wien', 8900000, 'Schönbrunn slott'),
     ('Ryssland', 'Moskva', 143400000, 'Röda torget');
 
-
+-- Europa frågor
 -- fråga 1
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vad är huvudstaden i Albanien?', 1);
@@ -199,3 +207,104 @@ VALUES (10, 'Frankrike', 1),
        (10, 'Spanien', 0);
 
 SELECT * FROM User;
+
+-- kontinent frågor
+-- fråga 1
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken kontinent ligger Sverige i?', 1);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (1, 'Afrika', 0),
+       (1, 'Europa', 1),
+       (1, 'Nordamerika', 0),
+       (1, 'Asien', 0);
+
+-- fråga 2
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken kontinent ligger Brasilien i?', 2);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (2, 'Europa', 0),
+       (2, 'Asien', 0),
+       (2, 'Sydamerika', 1),
+       (2, 'Afrika', 0);
+
+-- fråga 3
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken kontinent ligger Kina i?', 3);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (3, 'Nordamerika', 0),
+       (3, 'Asien', 1),
+       (3, 'Europa', 0),
+       (3, 'Sydamerika', 0);
+
+-- fråga 4
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken kontinent ligger Egypten i?', 4);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (4, 'Afrika', 1),
+       (4, 'Asien', 0),
+       (4, 'Sydamerika', 0),
+       (4, 'Europa', 0);
+
+-- fråga 5
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken kontinent ligger Kanada i?', 5);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (5, 'Nordamerika', 1),
+       (5, 'Afrika', 0),
+       (5, 'Asien', 0),
+       (5, 'Europa', 0);
+
+-- fråga 6
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken kontinent ligger Australien i?', 6);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (6, 'Oceanien', 1),
+       (6, 'Afrika', 0),
+       (6, 'Sydamerika', 0),
+       (6, 'Asien', 0);
+
+-- fråga 7
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken kontinent ligger Indien i?', 7);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (7, 'Afrika', 0),
+       (7, 'Sydamerika', 0),
+       (7, 'Asien', 1),
+       (7, 'Europa', 0);
+
+-- fråga 8
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken kontinent ligger Argentina i?', 8);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (8, 'Sydamerika', 1),
+       (8, 'Europa', 0),
+       (8, 'Nordamerika', 0),
+       (8, 'Asien', 0);
+
+-- fråga 9
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken kontinent ligger Japan i?', 9);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (9, 'Asien', 1),
+       (9, 'Afrika', 0),
+       (9, 'Sydamerika', 0),
+       (9, 'Europa', 0);
+
+-- fråga 10
+INSERT INTO Question (questionText, countryId)
+VALUES ('Vilken kontinent ligger Tyskland i?', 10);
+
+INSERT INTO Answer (questionId, optionText, isCorrect)
+VALUES (10, 'Europa', 1),
+       (10, 'Sydamerika', 0),
+       (10, 'Afrika', 0),
+       (10, 'Asien', 0);

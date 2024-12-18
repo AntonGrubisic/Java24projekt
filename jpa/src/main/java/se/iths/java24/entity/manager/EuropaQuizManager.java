@@ -1,18 +1,15 @@
 package se.iths.java24.entity.manager;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
-import se.iths.java24.JPAUtil;
 import se.iths.java24.entity.Answer;
 import se.iths.java24.entity.Question;
 import se.iths.java24.entity.User;
 import java.util.Scanner;
-
 import static se.iths.java24.JPAUtil.inTransaction;
 
-public class QuizManager {
+public class EuropaQuizManager {
 
-    public static void QuizMenu(EntityManager em, Scanner scanner) {
+    public static void EuropaQuizMenu(EntityManager em, Scanner scanner) {
         printMenu();
         String choice = scanner.nextLine();
 
@@ -168,7 +165,7 @@ public class QuizManager {
     }
 
     public static void updateQuestion(EntityManager em, Scanner scanner) {
-        System.out.println("Skriv in ditt questionId: ");
+        System.out.println("Skriv in questionId: ");
         Long questionId = scanner.nextLong();
         scanner.nextLine();
 
@@ -185,7 +182,7 @@ public class QuizManager {
                 }
                 ;
 
-                System.out.println("Frågan har uppdaterats");
+                System.out.println("Frågan har uppdaterats.");
             } else
                 System.out.println("Ingen fråga hittades med ID: " + questionId);
         });
