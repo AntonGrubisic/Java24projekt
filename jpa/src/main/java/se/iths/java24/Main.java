@@ -2,8 +2,8 @@ package se.iths.java24;
 
 import jakarta.persistence.EntityManager;
 import se.iths.java24.entity.User;
-import se.iths.java24.entity.manager.CityManager;
-import se.iths.java24.entity.manager.QuizManager;
+import se.iths.java24.entity.manager.ContinentManager;
+import se.iths.java24.entity.manager.EuropaQuizManager;
 import se.iths.java24.entity.manager.UserManager;
 import se.iths.java24.entity.manager.CountryManager;
 import se.iths.java24.entity.manager.StatisticsManager;
@@ -35,10 +35,10 @@ public class Main {
                     CountryManager.countryMenu(em, scanner);
                     break;
                 case "3":
-                    CityManager.cityMenu(em, scanner);
+                    ContinentManager.continentMenu(em, scanner);
                     break;
                 case "4":
-                    QuizManager.QuizMenu(em, scanner);
+                    EuropaQuizManager.EuropaQuizMenu(em, scanner);
                     break;
                 case "5":
                     StatisticsManager.viewStatistics(em);
@@ -61,8 +61,8 @@ public class Main {
         System.out.println("""
                 1 - Hantera användare
                 2 - Hantera länder
-                3 - Hantera städer
-                4 - Starta nytt Quiz
+                3 - Starta kontinent Quiz
+                4 - Starta Europa Quiz
                 5 - Visa statistik
                 6 - Stäng applikationen
                 """);

@@ -5,13 +5,13 @@
     <persistence-unit name="jpa-hibernate-mysql">
 
         <class>se.iths.java24.entity.Country</class>
-        <class>se.iths.java24.entity.City</class>
+        <class>se.iths.java24.entity.Continent</class>
         <class>se.iths.java24.entity.User</class>
         <class>se.iths.java24.entity.Question</class>
         <class>se.iths.java24.entity.Answer</class>
         <class>se.iths.java24.entity.QuizSession</class>
-        <class>se.iths.java24.entity.manager.QuizManager</class>
-        <class>se.iths.java24.entity.manager.CityManager</class>
+        <class>se.iths.java24.entity.manager.EuropaQuizManager</class>
+        <class>se.iths.java24.entity.manager.ContinentManager</class>
         <class>se.iths.java24.entity.manager.CountryManager</class>
         <class>se.iths.java24.entity.manager.StatisticsManager</class>
         <class>se.iths.java24.entity.manager.UserManager</class>
