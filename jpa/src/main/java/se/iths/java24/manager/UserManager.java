@@ -1,4 +1,4 @@
-package se.iths.java24.entity.manager;
+package se.iths.java24.manager;
 import jakarta.persistence.EntityManager;
 import java.util.Scanner;
 import static se.iths.java24.JPAUtil.inTransaction;
@@ -9,30 +9,29 @@ public class UserManager {
         boolean back = false;
 
         while (!back) {
-            System.out.println("~Användarmenyn~");
             printMenu();
             String choice = scanner.nextLine();
 
             switch (choice) {
-                case "1" -> {
+                case "1" -> showUsers(em);
+                case "2" -> addUser(em, scanner);
+                case "3" -> updateUser(em, scanner);
+                case "4" -> deleteUser(em, scanner);
+                case "5" -> {
                     back = true;
                 }
-                case "2" -> showUsers(em);
-                case "3" -> addUser(em, scanner);
-                case "4" -> updateUser(em, scanner);
-                case "5" -> deleteUser(em, scanner);
                 default -> System.out.println("Ogiltigt val. Försök igen.");
             }
         }
     }
     private static void printMenu() {
         System.out.println("""
-        Välj nedan:
-        1 - Gå tillbaka...
-        2 - Visa användare
-        3 - Lägg till användare
-        4 - Uppdatera användare
-        5 - Ta bort användare
+        ~Användarmeny~
+        1 - Visa användare
+        2 - Lägg till användare
+        3 - Uppdatera användare
+        4 - Ta bort användare
+        5 - Gå tillbaka...
         """);
     }
 

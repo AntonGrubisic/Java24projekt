@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long countryId;
+    private int countryId;
 
     private String countryName;
     private String countryCapital;
@@ -16,11 +16,11 @@ public class Country {
     private String landmark;
 
     // Getters and Setters
-    public Long getCountryId() {
+    public int getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(Long countryId) {
+    public void setCountryId(int countryId) {
         this.countryId = countryId;
     }
 

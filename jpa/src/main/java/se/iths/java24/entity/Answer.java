@@ -12,6 +12,12 @@ public class Answer {
     @Column(nullable = false)
     private String optionText;
 
+    @Column(nullable = false)
+    private boolean isCorrect;
+
+    @Column(nullable = false)
+    private Integer correctOption;
+
     @ManyToOne
     @JoinColumn(name = "questionId")
     private Question question;
@@ -19,20 +25,41 @@ public class Answer {
     public Long getAnswerId() {
         return answerId;
     }
+
     public void setAnswerId(Long answerId) {
         this.answerId = answerId;
     }
+
     public String getOptionText() {
         return optionText;
     }
-    public void setOptionText(String optionText) {
+
+    public void setOptionText(String optionText1, String optionText2, String optionText3, String optionText4) {
         this.optionText = optionText;
     }
+
     public Question getQuestion() {
         return question;
     }
+
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public boolean isCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(boolean isCorrect) {
+        this.isCorrect = isCorrect;
+    }
+
+    public Integer getCorrectOption() {
+        return correctOption;
+    }
+
+    public void setCorrectOption(Integer correctOption) {
+        this.correctOption = correctOption;
     }
 
 }

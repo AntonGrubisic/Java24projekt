@@ -1,4 +1,4 @@
-package se.iths.java24.entity.manager;
+package se.iths.java24.manager;
 import jakarta.persistence.EntityManager;
 import se.iths.java24.entity.Country;
 
@@ -20,11 +20,11 @@ public class CountryManager {
             String choice = scanner.nextLine();
 
             switch (choice) {
-                case "1" -> back = true;
-                case "2" -> showAllCountries(em);
-                case "3" -> addCountry(em, scanner);
-                case "4" -> updateCountry(em, scanner);
-                case "5" -> deleteCountry(em, scanner);
+                case "1" -> showAllCountries(em);
+                case "2" -> addCountry(em, scanner);
+                case "3" -> updateCountry(em, scanner);
+                case "4" -> deleteCountry(em, scanner);
+                case "5" -> back = true;
                 default -> System.out.println("Ogiltigt val. Försök igen.");
             }
         }
@@ -32,12 +32,12 @@ public class CountryManager {
     
     private static void printMenu ()  {
         System.out.println("""
-            ~Landsmenyn~
-            1 - Gå tillbaka...
-            2 - Visa alla länder
-            3 - Lägg till ett nytt land
-            4 - Uppdatera ett land
-            5 - Ta bort ett land
+            ~Landsmeny~
+            1 - Visa alla länder
+            2 - Lägg till ett nytt land
+            3 - Uppdatera ett land
+            4 - Ta bort ett land
+            5 - Gå tillbaka...
             """);
     }
 

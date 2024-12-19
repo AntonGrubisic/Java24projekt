@@ -2,11 +2,11 @@ package se.iths.java24;
 
 import jakarta.persistence.EntityManager;
 import se.iths.java24.entity.User;
-import se.iths.java24.entity.manager.ContinentManager;
-import se.iths.java24.entity.manager.EuropaQuizManager;
-import se.iths.java24.entity.manager.UserManager;
-import se.iths.java24.entity.manager.CountryManager;
-import se.iths.java24.entity.manager.StatisticsManager;
+import se.iths.java24.manager.ContinentManager;
+import se.iths.java24.manager.EuropaQuizManager;
+import se.iths.java24.manager.UserManager;
+import se.iths.java24.manager.CountryManager;
+import se.iths.java24.manager.StatisticsManager;
 
 import java.util.Scanner;
 
@@ -20,7 +20,7 @@ public class Main {
         EntityManager em = getEntityManager();
         boolean quit = false;
 
-        System.out.println("Welcome to GeoQuiz!");
+        System.out.println("Välkommen till GeoQuiz! 🌍");
         // Display menu options
 
         while (!quit) {
@@ -41,7 +41,7 @@ public class Main {
                     EuropaQuizManager.EuropaQuizMenu(em, scanner);
                     break;
                 case "5":
-                    StatisticsManager.viewStatistics(em);
+                    StatisticsManager.statisticsMenu(em, scanner);
                     break;
                 case "6":
                     scanner.close();
@@ -57,16 +57,15 @@ public class Main {
     }
 
     private static void printMenu() {
-        System.out.println("Välj nedan: ");
         System.out.println("""
+                ~Huvudmeny~ (Välj nedan)
                 1 - Hantera användare
                 2 - Hantera länder
-                3 - Starta kontinent Quiz
-                4 - Starta Europa Quiz
+                3 - Starta kontinent-Quiz
+                4 - Starta Europa-Quiz
                 5 - Visa statistik
                 6 - Stäng applikationen
                 """);
-
     }
 
     private static void startQuiz(EntityManager em) {
@@ -146,7 +145,7 @@ public class Main {
         }
 
         // After the quiz, show the score to the user
-        System.out.println("Ditt resultat är: " + score + " av " + questions.length);
+        System.out.println("Din totala poäng är: " + score + " av " + questions.length + "! ⭐");
 
 
         int finalScore = score;
@@ -156,7 +155,7 @@ public class Main {
                 user.setUserScore(finalScore);  // Set the new score
                 System.out.println("Poängen uppdaterades för: " + user.getUserName());
             } else {
-                System.out.println("Ingen användare hittades");
+                System.out.println("Ingen användare hittades.");
             }
         });
     }

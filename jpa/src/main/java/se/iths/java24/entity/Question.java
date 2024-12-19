@@ -2,6 +2,8 @@ package se.iths.java24.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Question", schema = "demo")
 public class Question {
@@ -11,6 +13,9 @@ public class Question {
     private Long questionId;
 
     private String questionText;
+
+    @OneToMany (mappedBy = "question")
+    private List<Answer> answers;
 
     // Getters and setters
     public Long getQuestionId() {
@@ -28,4 +33,12 @@ public class Question {
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
     }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
 }
