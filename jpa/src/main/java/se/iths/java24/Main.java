@@ -66,7 +66,6 @@ public class Main {
                 5 - Visa statistik
                 6 - Stäng applikationen
                 """);
-
     }
 
     private static void startQuiz(EntityManager em) {
