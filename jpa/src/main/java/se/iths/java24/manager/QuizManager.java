@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static se.iths.java24.JPAUtil.inTransaction;
+import static se.iths.java24.JPAUtil.setForeignKeyChecks;
 
 public class QuizManager {
 
@@ -22,10 +23,10 @@ public class QuizManager {
             switch (choice) {
                 case "1" -> startQuiz(em, scanner);
                 case "2" -> addQuestionWithAnswers(em, scanner);
-                case "4" -> updateQuestion(em, scanner);
-                case "5" -> deleteQuestion(em, scanner);
-                case "6" -> showQuestions(em);
-                case "7" -> {
+                case "3" -> updateQuestion(em, scanner);
+                case "4" -> deleteQuestion(em, scanner);
+                case "5" -> showQuestions(em);
+                case "6" -> {
                     System.out.println("Återgår till huvudmenyn...");
                     exit = true;
                 }
@@ -39,10 +40,10 @@ public class QuizManager {
                 ~Quiz-meny~
                 1 - Starta nytt quiz
                 2 - Lägg till fråga
-                4 - Uppdatera fråga
-                5 - Ta bort fråga
-                6 - Visa frågor
-                7 - Gå tillbaka...
+                3 - Uppdatera fråga
+                4 - Ta bort fråga
+                5 - Visa frågor
+                6 - Gå tillbaka...
                 """);
     }
 
@@ -137,18 +138,50 @@ public class QuizManager {
     }
 
     public static void updateQuestion(EntityManager em, Scanner scanner) {
-        System.out.println("Skriv in questionId: ");
+
+        System.out.println("Skriv in fråge-ID: ");
         Long questionId = scanner.nextLong();
         scanner.nextLine();
 
         inTransaction(entityManager -> {
             Question question = entityManager.find(Question.class, questionId);
             if (question != null) {
+                // Uppdatera frågetext
                 System.out.println("Skriv in den nya frågan: ");
                 String newQuestionText = scanner.nextLine();
                 question.setQuestionText(newQuestionText);
                 entityManager.merge(question);
                 System.out.println("Frågan har uppdaterats.");
+
+                // Hämta och uppdatera svarsalternativ
+                List<Answer> answers = entityManager.createQuery(
+                                "SELECT a FROM Answer a WHERE a.question = :question", Answer.class)
+                        .setParameter("question", question)
+                        .getResultList();
+
+                for (int i = 0; i < answers.size(); i++) {
+                    Answer answer = answers.get(i);
+                    System.out.println("Nuvarande svarsalternativ " + (i + 1) + ": " + answer.getOptionText());
+                    System.out.print("Ange nytt svarsalternativ (lämna tomt för att behålla): ");
+                    String newAnswerText = scanner.nextLine();
+
+                    if (!newAnswerText.isBlank()) {
+                        answer.setOptionText(newAnswerText);
+                        entityManager.merge(answer);
+                    }
+                }
+
+                // Uppdatera korrekt svar
+                System.out.print("Ange vilket svar som är korrekt (1-" + answers.size() + "): ");
+                int correctOption = scanner.nextInt();
+                scanner.nextLine();
+
+                for (int i = 0; i < answers.size(); i++) {
+                    Answer answer = answers.get(i);
+                    answer.setCorrect(i == correctOption - 1); // Markera korrekt alternativ
+                    entityManager.merge(answer);
+                }
+                System.out.println("Svarsalternativen har uppdaterats.");
             } else {
                 System.out.println("Ingen fråga hittades med ID: " + questionId);
             }
@@ -156,6 +189,7 @@ public class QuizManager {
     }
 
     public static void deleteQuestion(EntityManager em, Scanner scanner) {
+
         System.out.println("Skriv in frågeId: ");
         Long questionId = scanner.nextLong();
         scanner.nextLine();
@@ -163,8 +197,21 @@ public class QuizManager {
         inTransaction(entityManager -> {
             Question question = entityManager.find(Question.class, questionId);
             if (question != null) {
+                // Hämta och ta bort alla kopplade svar
+                setForeignKeyChecks(em, false);
+                List<Answer> answers = entityManager.createQuery(
+                                "SELECT a FROM Answer a WHERE a.question = :question", Answer.class)
+                        .setParameter("question", question)
+                        .getResultList();
+
+                for (Answer answer : answers) {
+                    entityManager.remove(answer); // Ta bort varje svar
+                }
+
+                // Ta bort själva frågan
                 entityManager.remove(question);
-                System.out.println("Fråga raderad.");
+                System.out.println("Fråga och dess svar har raderats.");
+                setForeignKeyChecks(em, true);
             } else {
                 System.out.println("Ingen fråga hittades med ID: " + questionId);
             }

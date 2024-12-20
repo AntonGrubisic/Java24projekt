@@ -42,8 +42,7 @@ public class Main {
                     System.out.println("Stänger applikationen...");
                     quit = true;
                     break;
-
-
+                    
                 default:
                     System.out.println("Ogiltigt val, försök igen.");
             }

@@ -48,19 +48,13 @@ CREATE TABLE Answer (
     isCorrect boolean NOT NULL,
     FOREIGN KEY(questionId) REFERENCES Question(questionId)
 );
--- ALTER TABLE Answer ADD COLUMN correctOption INTEGER;
 
 -- INSERT INTO
 -- --------------------------------------------------------------------------------
-INSERT INTO User (userId, userName)
-VALUES (1, 'Anna'),
-       (2, 'Björn'),
-       (3, 'Carla');
-
 INSERT INTO User (userId, userName, userCountry)
-VALUES (4, 'Geoffry', 'Sweden'),
-       (5, 'Amanda', 'Denmark'),
-       (6, 'Rikard', 'Sweden');
+VALUES (1, 'Geoffry', 'Sweden'),
+       (2, 'Amanda', 'Denmark'),
+       (3, 'Rikard', 'Sweden');
 
 INSERT INTO Continent (continentName, continentCountries, continentSize)
 VALUES

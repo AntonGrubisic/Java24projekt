@@ -10,11 +10,16 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int countryId;
 
+    @Column(name = "countryName", nullable = false)
     private String countryName;
+    @Column(name = "countryCapital")
     private String countryCapital;
+    @Column(name = "countryPopulation")
     private Integer countryPopulation;
+    @Column(name = "landmark")
     private String landmark;
-    private int continentId;
+    @Column(name = "continentId")
+    private Integer continentId;
 
     // Getters and Setters
     public int getCountryId() {
@@ -59,7 +64,7 @@ public class Country {
     public int getContinentId () {
         return continentId;
     }
-    public void setContinentId (int continentId) {
+    public void setContinentId (Integer continentId) {
         this.continentId = continentId;
     }
 

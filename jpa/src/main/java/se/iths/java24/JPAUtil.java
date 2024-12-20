@@ -37,4 +37,21 @@ public class JPAUtil {
             }
         }
     }
+    public static void setForeignKeyChecks(EntityManager em, boolean enable) {
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        try {
+            if (enable) {
+                em.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1;").executeUpdate();
+            } else {
+                em.createNativeQuery("SET FOREIGN_KEY_CHECKS = 0;").executeUpdate();
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw e;
+        }
+    }
 }

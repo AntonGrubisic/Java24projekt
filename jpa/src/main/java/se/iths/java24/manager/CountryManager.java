@@ -1,16 +1,13 @@
 package se.iths.java24.manager;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import se.iths.java24.entity.Country;
 
 import java.util.List;
 import java.util.Scanner;
+import static se.iths.java24.JPAUtil.setForeignKeyChecks;
 
 public class CountryManager {
-
-//    public CountryManager(EntityManager em, Scanner scanner) {
-//        CountryManager.em = em;
-//        this.scanner = scanner;
-//    }
 
     public static void countryMenu(EntityManager em, Scanner scanner) {
         boolean back = false;
@@ -29,16 +26,16 @@ public class CountryManager {
             }
         }
     }
-    
-    private static void printMenu ()  {
+
+    private static void printMenu() {
         System.out.println("""
-            ~Landsmeny~
-            1 - Visa alla länder
-            2 - Lägg till ett nytt land
-            3 - Uppdatera ett land
-            4 - Ta bort ett land
-            5 - Gå tillbaka...
-            """);
+                ~Landsmeny~
+                1 - Visa alla länder
+                2 - Lägg till ett nytt land
+                3 - Uppdatera ett land
+                4 - Ta bort ett land
+                5 - Gå tillbaka...
+                """);
     }
 
     public static void showAllCountries(EntityManager em) {
@@ -76,6 +73,7 @@ public class CountryManager {
         country.setCountryCapital(capital);
         country.setCountryPopulation(population);
         country.setLandmark(landmark);
+        country.setContinentId(continentId);
 
         em.getTransaction().begin();
         em.persist(country);
@@ -136,7 +134,9 @@ public class CountryManager {
         }
 
         em.getTransaction().begin();
+        setForeignKeyChecks(em, false);
         em.remove(country);
+        setForeignKeyChecks(em, true);
         em.getTransaction().commit();
 
         System.out.println("Landet har tagits bort.");
