@@ -18,6 +18,8 @@ public class Continent {
     private Integer countriesAmount;
 
     @Column(name = "continentSize")
+
+
     private Integer continentSize;
 
     public String getContinentName() {

@@ -14,6 +14,7 @@ public class Country {
     private String countryCapital;
     private Integer countryPopulation;
     private String landmark;
+    private int continentId;
 
     // Getters and Setters
     public int getCountryId() {
@@ -54,6 +55,12 @@ public class Country {
 
     public void setLandmark(String landmark) {
         this.landmark = landmark;
+    }
+    public int getContinentId () {
+        return continentId;
+    }
+    public void setContinentId (int continentId) {
+        this.continentId = continentId;
     }
 
     @Override

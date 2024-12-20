@@ -59,6 +59,17 @@ public class CountryManager {
         int population = Integer.parseInt(scanner.nextLine());
         System.out.print("Ange landmärke: ");
         String landmark = scanner.nextLine();
+        System.out.println("""
+                Europa (1)
+                Antarktis (2)
+                Asien (3)
+                Oceanien (4)
+                Afrika (5)
+                Nordamerika (6)
+                Sydamerika (7)
+                """);
+        System.out.println("Ange kontinent-ID för landet: ");
+        int continentId = Integer.parseInt(scanner.nextLine());
 
         Country country = new Country();
         country.setCountryName(name);
@@ -91,12 +102,24 @@ public class CountryManager {
         int newPopulation = Integer.parseInt(scanner.nextLine());
         System.out.print("Ange nytt landmärke (nuvarande: " + country.getLandmark() + "): ");
         String newLandmark = scanner.nextLine();
+        System.out.println("""
+                Europa (1)
+                Antarktis (2)
+                Asien (3)
+                Oceanien (4)
+                Afrika (5)
+                Nordamerika (6)
+                Sydamerika (7)
+                """);
+        System.out.println("Ange kontinent-ID för landet: (nuvarande: " + country.getContinentId() + ")");
+        int continentId = Integer.parseInt(scanner.nextLine());
 
         em.getTransaction().begin();
         country.setCountryName(newName);
         country.setCountryCapital(newCapital);
         country.setCountryPopulation(newPopulation);
         country.setLandmark(newLandmark);
+        country.setContinentId(continentId);
         em.getTransaction().commit();
 
         System.out.println("Landet har uppdaterats.");

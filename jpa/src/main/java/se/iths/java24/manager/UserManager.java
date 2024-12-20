@@ -44,12 +44,15 @@ public class UserManager {
 
     //Create
     public static void addUser(EntityManager em, Scanner scanner) {
-        System.out.println("Enter your name: ");
+        System.out.println("Skriv in ditt namn: ");
         String name = scanner.nextLine();
+        System.out.println("Skriv in ditt land: ");
+        String country = scanner.nextLine();
         //int score = 0;
         se.iths.java24.entity.User user = new se.iths.java24.entity.User();
         user.setUserName(name);
-        user.setUserScore(0);
+        user.setUserCountry(country);
+        //user.setUserScore(0);
 
         inTransaction(entityManager -> {
             entityManager.persist(user);
@@ -67,12 +70,10 @@ public class UserManager {
             if (user != null) {
                 System.out.println("Skriv in ditt namn: ");
                 String newUserName = scanner.nextLine();
-                user.setUserName(newUserName);
 
-                // Om entiteten är detached kopplas den tillbaka
-                if (!entityManager.contains(user)) {
-                    user = entityManager.merge(user);
-                };
+                em.getTransaction().begin();
+                user.setUserName(newUserName);
+                em.getTransaction().commit();
 
                 System.out.println("Användaren har uppdaterats");
             } else

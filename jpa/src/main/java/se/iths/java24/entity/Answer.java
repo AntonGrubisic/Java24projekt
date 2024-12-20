@@ -15,8 +15,6 @@ public class Answer {
     @Column(nullable = false)
     private boolean isCorrect;
 
-    @Column(nullable = false)
-    private Integer correctOption;
 
     @ManyToOne
     @JoinColumn(name = "questionId")
@@ -34,7 +32,7 @@ public class Answer {
         return optionText;
     }
 
-    public void setOptionText(String optionText1, String optionText2, String optionText3, String optionText4) {
+    public void setOptionText(String optionText) {
         this.optionText = optionText;
     }
 
@@ -50,16 +48,11 @@ public class Answer {
         return isCorrect;
     }
 
+    public int getCorrectOption() {
+        return isCorrect ? 1 : 0;
+    }
+
     public void setCorrect(boolean isCorrect) {
         this.isCorrect = isCorrect;
     }
-
-    public Integer getCorrectOption() {
-        return correctOption;
-    }
-
-    public void setCorrectOption(Integer correctOption) {
-        this.correctOption = correctOption;
-    }
-
 }

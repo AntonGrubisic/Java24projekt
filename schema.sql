@@ -2,25 +2,24 @@ use demo;
 
 -- DROP
 -- --------------------------------------------------------------------------------
-DROP TABLE QuizSession;
 DROP TABLE Answer;
 DROP TABLE Question;
 DROP TABLE Country;
 DROP TABLE Continent;
 DROP TABLE User;
 
+
 -- CREATE TABLE
 -- --------------------------------------------------------------------------------
 CREATE TABLE User(
     userId INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    userName VARCHAR(255) UNIQUE,
-    userScore INTEGER NOT NULL
-
+    userName VARCHAR(255) NOT NULL UNIQUE,
+    userCountry VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Continent (
     continentId INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    continentName VARCHAR (255),
+    continentName VARCHAR (255) NOT NULL UNIQUE,
     continentCountries INTEGER,
     continentSize INTEGER
 );
@@ -30,7 +29,9 @@ CREATE TABLE Country (
     countryName VARCHAR(255) UNIQUE,
     countryPopulation INTEGER,
     countryCapital VARCHAR(255),
-    landmark VARCHAR(255)
+    landmark VARCHAR(255),
+    continentId INTEGER NOT NULL,
+    FOREIGN KEY (continentId) REFERENCES Continent(continentId)
 );
 
 CREATE TABLE Question(
@@ -44,20 +45,10 @@ CREATE TABLE Answer (
     answerId INTEGER PRIMARY KEY AUTO_INCREMENT,
     questionId INTEGER,
     optionText VARCHAR(255),
-    isCorrect TINYINT(1) NOT NULL DEFAULT 0,
+    isCorrect boolean NOT NULL,
     FOREIGN KEY(questionId) REFERENCES Question(questionId)
 );
-ALTER TABLE Answer ADD COLUMN correctOption INTEGER;
-
-CREATE TABLE QuizSession (
-    quizSessionId INTEGER PRIMARY KEY AUTO_INCREMENT,
-    userId INTEGER,
-    questionId INTEGER,
-    answerId INTEGER,
-    FOREIGN KEY(userId)  REFERENCES User(userId),
-    FOREIGN KEY(questionId)  REFERENCES Question(questionId),
-    FOREIGN KEY(answerId)  REFERENCES Answer(answerId)
-);
+-- ALTER TABLE Answer ADD COLUMN correctOption INTEGER;
 
 -- INSERT INTO
 -- --------------------------------------------------------------------------------
@@ -66,58 +57,68 @@ VALUES (1, 'Anna'),
        (2, 'Björn'),
        (3, 'Carla');
 
-INSERT INTO User (userId, userName, userScore)
-VALUES (4, 'Geoffry', 3),
-       (5, 'Amanda', 2),
-       (6, 'Rikard', 4);
+INSERT INTO User (userId, userName, userCountry)
+VALUES (4, 'Geoffry', 'Sweden'),
+       (5, 'Amanda', 'Denmark'),
+       (6, 'Rikard', 'Sweden');
 
-INSERT INTO Country (countryname, countryCapital, countryPopulation, landmark)
+INSERT INTO Continent (continentName, continentCountries, continentSize)
 VALUES
-    ('Albanien', 'Tirana', 2800000, 'Berat'),
-    ('Andorra', 'Andorra la Vella', 77000, 'Caldea Spa'),
-    ('Belgien', 'Bryssel', 11500000, 'Grand Place'),
-    ('Bosnien och Hercegovina', 'Sarajevo', 3300000, 'Stari Most-bron'),
-    ('Bulgarien', 'Sofia', 6900000, 'Rilaklostret'),
-    ('Danmark', 'Köpenhamn', 5800000, 'Tivoli'),
-    ('Estland', 'Tallinn', 1300000, 'Gamla stan'),
-    ('Finland', 'Helsingfors', 5500000, 'Sveaborg'),
-    ('Frankrike', 'Paris', 65000000, 'Eiffeltornet'),
-    ('Grekland', 'Aten', 10400000, 'Akropolis'),
-    ('Irland', 'Dublin', 4900000, 'Cliffs of Moher'),
-    ('Island', 'Reykjavik', 341000, 'Blå lagunen'),
-    ('Italien', 'Rom', 60400000, 'Colosseum'),
-    ('Kosovo', 'Pristina', 1800000, 'Visoki Decani-klostret'),
-    ('Kroatien', 'Zagreb', 4100000, 'Plitvicesjöarna'),
-    ('Lettland', 'Riga', 1900000, 'Gamla stan'),
-    ('Liechtenstein', 'Vaduz', 38000, 'Vaduz slott'),
-    ('Litauen', 'Vilnius', 2800000, 'Korskullen'),
-    ('Luxemburg', 'Luxemburg', 625000, 'Casemates du Bock'),
-    ('Malta', 'Valletta', 514000, 'Grand Harbour'),
-    ('Moldavien', 'Chisinau', 2600000, 'Orheiul Vechi'),
-    ('Monaco', 'Monaco', 39000, 'Monte Carlo Casino'),
-    ('Montenegro', 'Podgorica', 622000, 'Kotorbukten'),
-    ('Nederländerna', 'Amsterdam', 17400000, 'Anne Franks hus'),
-    ('Nordmakedonien', 'Skopje', 2100000, 'Ohridsjön'),
-    ('Norge', 'Oslo', 5400000, 'Geirangerfjorden'),
-    ('Polen', 'Warszawa', 37800000, 'Gamla stan i Kraków'),
-    ('Portugal', 'Lissabon', 10300000, 'Torre de Belém'),
-    ('Rumänien', 'Bukarest', 19100000, 'Bran Castle'),
-    ('San Marino', 'San Marino', 34000, 'Guaita-tornet'),
-    ('Schweiz', 'Bern', 8700000, 'Matterhorn'),
-    ('Serbien', 'Belgrad', 6800000, 'Kalemegdan-fästningen'),
-    ('Slovakien', 'Bratislava', 5400000, 'Bratislava slott'),
-    ('Slovenien', 'Ljubljana', 2100000, 'Bledsjön'),
-    ('Spanien', 'Madrid', 47300000, 'Alhambra'),
-    ('Storbritannien', 'London', 67200000, 'Big Ben'),
-    ('Sverige', 'Stockholm', 10500000, 'Kungliga slottet'),
-    ('Tjeckien', 'Prag', 10700000, 'Karlsbron'),
-    ('Tyskland', 'Berlin', 83200000, 'Brandenburger Tor'),
-    ('Ukraina', 'Kiev', 43300000, 'Sofiakatedralen'),
-    ('Ungern', 'Budapest', 9700000, 'Parlamentet'),
-    ('Vatikanstaten', 'Vatikanstaten', 800, 'Peterskyrkan'),
-    ('Vitryssland', 'Minsk', 9300000, 'Nesvizh slott'),
-    ('Österrike', 'Wien', 8900000, 'Schönbrunn slott'),
-    ('Ryssland', 'Moskva', 143400000, 'Röda torget');
+        ('Europa', 44, 10600000),
+        ('Antarktis', 12, 13660000),
+        ('Asien', 48, 17226200),
+        ('Oceanien', 14, 8525989),
+        ('Afrika', 54, 30370000),
+        ('Nordamerika',23, 24500000),
+        ('Sydamerika',12, 17840000);
+
+INSERT INTO Country (countryname, countryCapital, countryPopulation, landmark, continentId)
+VALUES
+    ('Albanien', 'Tirana', 2800000, 'Berat', 1),
+    ('Andorra', 'Andorra la Vella', 77000, 'Caldea Spa', 1),
+    ('Belgien', 'Bryssel', 11500000, 'Grand Place', 1),
+    ('Bosnien och Hercegovina', 'Sarajevo', 3300000, 'Stari Most-bron', 1),
+    ('Bulgarien', 'Sofia', 6900000, 'Rilaklostret', 1),
+    ('Danmark', 'Köpenhamn', 5800000, 'Tivoli', 1),
+    ('Estland', 'Tallinn', 1300000, 'Gamla stan', 1),
+    ('Finland', 'Helsingfors', 5500000, 'Sveaborg', 1),
+    ('Frankrike', 'Paris', 65000000, 'Eiffeltornet', 1),
+    ('Grekland', 'Aten', 10400000, 'Akropolis', 1),
+    ('Irland', 'Dublin', 4900000, 'Cliffs of Moher', 1),
+    ('Island', 'Reykjavik', 341000, 'Blå lagunen', 1),
+    ('Italien', 'Rom', 60400000, 'Colosseum', 1),
+    ('Kosovo', 'Pristina', 1800000, 'Visoki Decani-klostret', 1),
+    ('Kroatien', 'Zagreb', 4100000, 'Plitvicesjöarna', 1),
+    ('Lettland', 'Riga', 1900000, 'Gamla stan', 1),
+    ('Liechtenstein', 'Vaduz', 38000, 'Vaduz slott', 1),
+    ('Litauen', 'Vilnius', 2800000, 'Korskullen', 1),
+    ('Luxemburg', 'Luxemburg', 625000, 'Casemates du Bock', 1),
+    ('Malta', 'Valletta', 514000, 'Grand Harbour', 1),
+    ('Moldavien', 'Chisinau', 2600000, 'Orheiul Vechi', 1),
+    ('Monaco', 'Monaco', 39000, 'Monte Carlo Casino', 1),
+    ('Montenegro', 'Podgorica', 622000, 'Kotorbukten', 1),
+    ('Nederländerna', 'Amsterdam', 17400000, 'Anne Franks hus', 1),
+    ('Nordmakedonien', 'Skopje', 2100000, 'Ohridsjön', 1),
+    ('Norge', 'Oslo', 5400000, 'Geirangerfjorden', 1),
+    ('Polen', 'Warszawa', 37800000, 'Gamla stan i Kraków', 1),
+    ('Portugal', 'Lissabon', 10300000, 'Torre de Belém', 1),
+    ('Rumänien', 'Bukarest', 19100000, 'Bran Castle', 1),
+    ('San Marino', 'San Marino', 34000, 'Guaita-tornet', 1),
+    ('Schweiz', 'Bern', 8700000, 'Matterhorn', 1),
+    ('Serbien', 'Belgrad', 6800000, 'Kalemegdan-fästningen', 1),
+    ('Slovakien', 'Bratislava', 5400000, 'Bratislava slott', 1),
+    ('Slovenien', 'Ljubljana', 2100000, 'Bledsjön', 1),
+    ('Spanien', 'Madrid', 47300000, 'Alhambra', 1),
+    ('Storbritannien', 'London', 67200000, 'Big Ben', 1),
+    ('Sverige', 'Stockholm', 10500000, 'Kungliga slottet', 1),
+    ('Tjeckien', 'Prag', 10700000, 'Karlsbron', 1),
+    ('Tyskland', 'Berlin', 83200000, 'Brandenburger Tor', 1),
+    ('Ukraina', 'Kiev', 43300000, 'Sofiakatedralen', 1),
+    ('Ungern', 'Budapest', 9700000, 'Parlamentet', 1),
+    ('Vatikanstaten', 'Vatikanstaten', 800, 'Peterskyrkan', 1),
+    ('Vitryssland', 'Minsk', 9300000, 'Nesvizh slott', 1),
+    ('Österrike', 'Wien', 8900000, 'Schönbrunn slott', 1),
+    ('Ryssland', 'Moskva', 143400000, 'Röda torget', 1);
 
 -- Europa frågor
 -- fråga 1

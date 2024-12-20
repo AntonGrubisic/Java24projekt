@@ -12,15 +12,14 @@ public class User {
     @Column(nullable = false)
     private String userName;
 
-    @Column
-    private Integer userScore;
+//    @Column
+//    private Integer userScore;
+
+    @Column (nullable = false)
+    private String userCountry;
 
     public long getUserId() {
         return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getUserName() {
@@ -31,16 +30,24 @@ public class User {
         this.userName = userName;
     }
 
-    public Integer getUserScore(){
-        return userScore;
+    public String getUserCountry(){
+        return userCountry;
     }
 
-    public void setUserScore(Integer userScore) {
-        this.userScore = userScore;
+    public void setUserCountry(String userCountry){
+        this.userCountry = userCountry;
     }
+
+//    public Integer getUserScore(){
+//        return userScore;
+//    }
+//
+//    public void setUserScore(Integer userScore) {
+//        this.userScore = userScore;
+//    }
 
     @Override
     public String toString() {
-        return "AnvändarID: " + userId + ", Namn: " + userName + ", Poäng: " + userScore + ".";
+        return "User ID: " + userId + ", Name: " + userName + ", Country: " + userCountry;
     }
 }

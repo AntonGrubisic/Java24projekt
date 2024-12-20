@@ -1,9 +1,11 @@
 package se.iths.java24.manager;
 
 import jakarta.persistence.EntityManager;
-import se.iths.java24.entity.Answer;
+import se.iths.java24.entity.Continent;
+import se.iths.java24.entity.Country;
 import se.iths.java24.entity.Question;
-import se.iths.java24.entity.User;
+
+import java.util.List;
 import java.util.Scanner;
 
 import static se.iths.java24.JPAUtil.inTransaction;
@@ -19,13 +21,11 @@ public class ContinentManager {
             String choice = scanner.nextLine();
 
             switch (choice) {
-                case "1" -> startQuiz(em, scanner);
-                case "2" -> addQuestion(em, scanner);
-                case "3" -> addAnswer(em, scanner);
-                case "4" -> updateQuestion(em, scanner);
-                case "5" -> deleteQuestion(em, scanner);
-                case "6" -> showQuestions(em);
-                case "7" -> {
+                case "1" -> addContinent(em, scanner);
+                case "2" -> updateContinent(em, scanner);
+                case "3" -> deleteContinent(em, scanner);
+                case "4" -> showContinents(em);
+                case "5" -> {
                     System.out.println("Återgår till huvudmenyn...");
                     exit = true;
                 }
@@ -34,156 +34,87 @@ public class ContinentManager {
         }
     }
 
+    private static void showContinents(EntityManager em) {
+        List<Continent> continents = em.createQuery("SELECT c FROM Continent c", Continent.class).getResultList();
+        if (continents.isEmpty()) {
+            System.out.println("Inga kontinenter hittades i databasen.");
+        } else {
+            continents.forEach(System.out::println);
+        }
+    }
+
+    private static void updateContinent(EntityManager em, Scanner scanner) {
+        System.out.print("Ange ID för kontinenten du vill uppdatera: ");
+        Long continentId = Long.parseLong(scanner.nextLine());
+
+        Continent continent = em.find(Continent.class, continentId);
+        if (continent == null) {
+            System.out.println("Ingen kontinent hittades med det angivna ID.");
+            return;
+        }
+        //Uppdatera koden nedan...
+        System.out.print("Ange nytt namn för kontinenten (nuvarande: " + continent.getContinentName() + "): ");
+        String newName = scanner.nextLine();
+        System.out.print("Ange ny mängd länder (nuvarande: " + continent.getCountriesAmount() + "): ");
+        int newCountryAmount = Integer.parseInt(scanner.nextLine());
+        System.out.print("Ange ny yta (km²) (nuvarande: " + continent.getContinentSize() + "): ");
+        int newSize = Integer.parseInt(scanner.nextLine());
+
+        em.getTransaction().begin();
+        continent.setContinentName(newName);
+        continent.setCountriesAmount(newCountryAmount);
+        continent.setContinentSize(newSize);
+        em.getTransaction().commit();
+
+        System.out.println("Kontinenten har uppdaterats.");
+    }
+
+    private static void addContinent(EntityManager em, Scanner scanner) {
+        System.out.print("Ange kontinentens namn: ");
+        String name = scanner.nextLine();
+        System.out.print("Ange antal länder: ");
+        int Amount = Integer.parseInt(scanner.nextLine());
+        System.out.print("Ange yta (km²): ");
+        int size = Integer.parseInt(scanner.nextLine());
+
+        Continent continent = new Continent();
+        continent.setContinentName(name);
+        continent.setContinentSize(Amount);
+        continent.setContinentSize(size);
+
+
+        em.getTransaction().begin();
+        em.persist(continent);
+        em.getTransaction().commit();
+
+        System.out.println("Landet har lagts till.");
+    }
+
+    private static void deleteContinent(EntityManager em, Scanner scanner) {
+        System.out.print("Ange ID för kontineten du vill ta bort: ");
+        Long continentId = Long.parseLong(scanner.nextLine());
+
+        Continent continent = em.find(Continent.class, continentId);
+        if (continent == null) {
+            System.out.println("Ingen kontinent hittades med det angivna ID.");
+            return;
+        }
+
+        em.getTransaction().begin();
+        em.remove(continent);
+        em.getTransaction().commit();
+
+        System.out.println("Kontinenten har tagits bort.");
+    }
+
     private static void printMenu() {
         System.out.println("""
                 ~Quiz-meny~
-                1 - Starta nytt quiz
-                2 - Lägg till fråga
-                3 - Lägg till Svar
-                4 - Uppdatera fråga
-                5 - Ta bort fråga
-                6 - Visa frågor
-                7 - Gå tillbaka...
+                1 - Lägg till kontinent
+                2 - Uppdatera kontinent
+                3 - Ta bort kontinent
+                4 - Visa kontinenter
+                5 - Gå tillbaka...
                 """);
-    }
-
-    private static void startQuiz(EntityManager em, Scanner scanner) {
-        int score = 0;  // Initialize the score
-
-        System.out.println("Välkommen till Kontinentquizet!");
-        System.out.println("Ange ditt användarID: ");
-        Long userId = scanner.nextLong();
-
-        var questions = em.createQuery("select q from Question q", Question.class).getResultList();
-
-        if (questions.isEmpty()) {
-            System.out.println("Inga frågor hittades för quizet.");
-            return;
-        }
-
-        for (Question question : questions) {
-            System.out.println("Fråga: " + question.getQuestionText());
-
-            var answers = em.createQuery("select a from Answer a WHERE a.question = :question", Answer.class)
-                    .setParameter("question", question)
-                    .getResultList();
-
-            for (int i = 0; i < answers.size(); i++) {
-                System.out.println((i + 1) + ". " + answers.get(i).getOptionText());
-            }
-
-            System.out.println("Ditt svar: ");
-            int userAnswer = scanner.nextInt();
-            scanner.nextLine();
-
-            if (userAnswer > 0 && userAnswer <= answers.size() && answers.get(userAnswer - 1).isCorrect()) {
-                score++;
-            }
-        }
-
-        System.out.println("Ditt resultat: " + score + " av " + questions.size());
-
-        int finalScore = score;
-        inTransaction(entityManager -> {
-            User user = entityManager.find(User.class, userId);
-            if (user != null) {
-                user.setUserScore(finalScore);
-                System.out.println("Dina poäng har uppdaterats");
-            } else {
-                System.out.println("Ingen användare hittades med ID: " + userId);
-            }
-        });
-    }
-
-    public static void addQuestion(EntityManager em, Scanner scanner) {
-        System.out.print("Skriv in en ny fråga: ");
-        String newQuestion = scanner.nextLine();
-        Question question = new Question();
-        question.setQuestionText(newQuestion);
-        inTransaction(entityManager -> entityManager.persist(question));
-        System.out.println("Frågan har lagts till.");
-    }
-
-
-    public static void addAnswer(EntityManager em, Scanner scanner) {
-        System.out.print("Skriv in fråge-ID som du vill lägga till ett svar till: ");
-        Long questionId = scanner.nextLong();
-        scanner.nextLine();
-
-        Question question = em.find(Question.class, questionId);
-        if (question == null) {
-            System.out.println("Ingen fråga hittades med ID: " + questionId);
-            return;
-        }
-        System.out.print("Skriv in svarsalternativ: ");
-        String newAnswer = scanner.nextLine();
-
-        System.out.print("Är detta det korrekta svaret? (true/false): ");
-        boolean isCorrect = scanner.nextBoolean();
-        scanner.nextLine();
-        Answer answer = new Answer();
-        answer.setQuestion(question);
-        //answer.setOptionText(newAnswer);
-        answer.setCorrect(isCorrect);
-
-        inTransaction(entityManager -> entityManager.persist(answer));
-        System.out.println("Svaret har lagts till.");
-    }
-
-
-    public static void updateQuestion(EntityManager em, Scanner scanner) {
-        System.out.println("Skriv in questionId: ");
-        Long questionId = scanner.nextLong();
-        scanner.nextLine();
-
-        inTransaction(entityManager -> {
-            Question question = entityManager.find(Question.class, questionId);
-            if (question != null) {
-                System.out.println("Skriv in den nya frågan: ");
-                String newlyMadeQuestion = scanner.nextLine();
-                question.setQuestionText(newlyMadeQuestion);
-
-
-                if (!entityManager.contains(question)) {
-                    question = entityManager.merge(question);
-                }
-                ;
-
-                System.out.println("Frågan har uppdaterats.");
-            } else
-                System.out.println("Ingen fråga hittades med ID: " + questionId);
-        });
-    }
-
-    public static void deleteQuestion(EntityManager em, Scanner scanner) {
-        System.out.println("Skriv in frågeId: ");
-        Long questionId = scanner.nextLong();
-        scanner.nextLine();
-
-        inTransaction(entityManager -> {
-            Question question = entityManager.find(Question.class, questionId);
-            if (question != null) {
-                entityManager.remove(question);
-                System.out.println("Fråga raderad.");
-            } else
-                System.out.println("Ingen fråga hittades med ID: " + questionId);
-        });
-    }
-
-    public static void showQuestions(EntityManager em) {
-        var questions = em.createQuery("SELECT q FROM Question q", Question.class).getResultList();
-        if (questions.isEmpty()) {
-            System.out.println("Inga frågor hittades.");
-            return;
-        }
-
-        questions.forEach(question -> {
-            System.out.println("Fråga: " + question.getQuestionText());
-            var answers = em.createQuery("SELECT a FROM Answer a WHERE a.question = :question", Answer.class)
-                    .setParameter("question", question)
-                    .getResultList();
-
-            answers.forEach(answer -> System.out.println("- " + answer.getOptionText() + " (Rätt: " + answer.isCorrect() + ")"));
-        });
     }
 }
