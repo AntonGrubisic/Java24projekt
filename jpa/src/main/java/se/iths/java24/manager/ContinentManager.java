@@ -91,7 +91,7 @@ public class ContinentManager {
     }
 
     private static void deleteContinent(EntityManager em, Scanner scanner) {
-        System.out.print("Ange ID för kontineten du vill ta bort: ");
+        System.out.print("Ange ID för kontinenten du vill ta bort: ");
         Long continentId = Long.parseLong(scanner.nextLine());
 
         Continent continent = em.find(Continent.class, continentId);

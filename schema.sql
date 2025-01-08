@@ -29,7 +29,7 @@ CREATE TABLE Country (
     countryName VARCHAR(255) UNIQUE,
     countryPopulation INTEGER,
     countryCapital VARCHAR(255),
-    landmark VARCHAR(255),
+    countryLandmark VARCHAR(255),
     continentId INTEGER NOT NULL,
     FOREIGN KEY (continentId) REFERENCES Continent(continentId)
 );
@@ -43,9 +43,9 @@ CREATE TABLE Question(
 
 CREATE TABLE Answer (
     answerId INTEGER PRIMARY KEY AUTO_INCREMENT,
+    answerOptionText VARCHAR(255),
+    answerIsCorrect boolean NOT NULL,
     questionId INTEGER,
-    optionText VARCHAR(255),
-    isCorrect boolean NOT NULL,
     FOREIGN KEY(questionId) REFERENCES Question(questionId)
 );
 
@@ -66,7 +66,7 @@ VALUES
         ('Nordamerika',23, 24500000),
         ('Sydamerika',12, 17840000);
 
-INSERT INTO Country (countryname, countryCapital, countryPopulation, landmark, continentId)
+INSERT INTO Country (countryname, countryCapital, countryPopulation, countryLandmark, continentId)
 VALUES
     ('Albanien', 'Tirana', 2800000, 'Berat', 1),
     ('Andorra', 'Andorra la Vella', 77000, 'Caldea Spa', 1),
@@ -119,7 +119,7 @@ VALUES
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vad är huvudstaden i Albanien?', 1);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (1, 'Sarajevo', 0),
        (1, 'Tirana', 1),
        (1, 'Paris', 0),
@@ -129,7 +129,7 @@ VALUES (1, 'Sarajevo', 0),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vad är huvudstaden i Belgien?', 2);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (2, 'Berlin', 0),
        (2, 'Bryssel', 1),
        (2, 'Paris', 0),
@@ -139,7 +139,7 @@ VALUES (2, 'Berlin', 0),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vad är huvudstaden i Frankrike?', 3);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (3, 'Madrid', 0),
        (3, 'Paris', 1),
        (3, 'Rom', 0),
@@ -149,7 +149,7 @@ VALUES (3, 'Madrid', 0),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vad är befolkningen i Grekland?', 4);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (4, '10400000', 1),
        (4, '7000000', 0),
        (4, '5000000', 0),
@@ -159,7 +159,7 @@ VALUES (4, '10400000', 1),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken landmärke finns i Rom?', 5);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (5, 'Frihetsgudinnan', 0),
        (5, 'Big Ben', 0),
        (5, 'Colosseum', 1),
@@ -169,7 +169,7 @@ VALUES (5, 'Frihetsgudinnan', 0),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vad är huvudstaden i Spanien?', 6);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (6, 'Paris', 0),
        (6, 'Barcelona', 0),
        (6, 'Madrid', 1),
@@ -179,7 +179,7 @@ VALUES (6, 'Paris', 0),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vad är huvudstaden i Sverige?', 7);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (7, 'Helsingfors', 0),
        (7, 'Oslo', 0),
        (7, 'Stockholm', 1),
@@ -189,7 +189,7 @@ VALUES (7, 'Helsingfors', 0),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vad är huvudstaden i Ryssland?', 8);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (8, 'Moskva', 1),
        (8, 'Kiev', 0),
        (8, 'Belgrad', 0),
@@ -199,7 +199,7 @@ VALUES (8, 'Moskva', 1),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken landmärke finns i Storbritannien?', 9);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (9, 'Big Ben', 1),
        (9, 'Frihetsgudinnan', 0),
        (9, 'Colosseum', 0),
@@ -209,7 +209,7 @@ VALUES (9, 'Big Ben', 1),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilket land är känt för Eiffeltornet?', 10);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (10, 'Spanien', 0),
        (10, 'Frankrike', 1),
        (10, 'Italien', 0),
@@ -221,7 +221,7 @@ VALUES (10, 'Spanien', 0),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken kontinent ligger Sverige i?', 1);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (1, 'Afrika', 0),
        (1, 'Europa', 1),
        (1, 'Nordamerika', 0),
@@ -231,7 +231,7 @@ VALUES (1, 'Afrika', 0),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken kontinent ligger Brasilien i?', 2);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (2, 'Europa', 0),
        (2, 'Asien', 0),
        (2, 'Sydamerika', 1),
@@ -241,7 +241,7 @@ VALUES (2, 'Europa', 0),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken kontinent ligger Kina i?', 3);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (3, 'Nordamerika', 0),
        (3, 'Asien', 1),
        (3, 'Europa', 0),
@@ -251,7 +251,7 @@ VALUES (3, 'Nordamerika', 0),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken kontinent ligger Egypten i?', 4);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (4, 'Afrika', 1),
        (4, 'Asien', 0),
        (4, 'Sydamerika', 0),
@@ -261,7 +261,7 @@ VALUES (4, 'Afrika', 1),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken kontinent ligger Kanada i?', 5);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (5, 'Nordamerika', 1),
        (5, 'Afrika', 0),
        (5, 'Asien', 0),
@@ -271,7 +271,7 @@ VALUES (5, 'Nordamerika', 1),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken kontinent ligger Australien i?', 6);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (6, 'Oceanien', 1),
        (6, 'Afrika', 0),
        (6, 'Sydamerika', 0),
@@ -281,7 +281,7 @@ VALUES (6, 'Oceanien', 1),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken kontinent ligger Indien i?', 7);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (7, 'Afrika', 0),
        (7, 'Sydamerika', 0),
        (7, 'Asien', 1),
@@ -291,7 +291,7 @@ VALUES (7, 'Afrika', 0),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken kontinent ligger Argentina i?', 8);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (8, 'Sydamerika', 1),
        (8, 'Europa', 0),
        (8, 'Nordamerika', 0),
@@ -301,7 +301,7 @@ VALUES (8, 'Sydamerika', 1),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken kontinent ligger Japan i?', 9);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (9, 'Asien', 1),
        (9, 'Afrika', 0),
        (9, 'Sydamerika', 0),
@@ -311,7 +311,7 @@ VALUES (9, 'Asien', 1),
 INSERT INTO Question (questionText, countryId)
 VALUES ('Vilken kontinent ligger Tyskland i?', 10);
 
-INSERT INTO Answer (questionId, optionText, isCorrect)
+INSERT INTO Answer (questionId, answerOptionText, answerIsCorrect)
 VALUES (10, 'Europa', 1),
        (10, 'Sydamerika', 0),
        (10, 'Afrika', 0),

@@ -23,7 +23,6 @@ public class Main {
             switch (choice) {
                 case "1":
                     UserManager.userMenu(em, scanner);
-                    //addUser(em);
                     break;
                 case "2":
                     CountryManager.countryMenu(em, scanner);
@@ -42,7 +41,7 @@ public class Main {
                     System.out.println("Stänger applikationen...");
                     quit = true;
                     break;
-                    
+
                 default:
                     System.out.println("Ogiltigt val, försök igen.");
             }

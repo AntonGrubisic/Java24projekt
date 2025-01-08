@@ -15,18 +15,10 @@ public class Answer {
     @Column(nullable = false)
     private boolean isCorrect;
 
-
     @ManyToOne
     @JoinColumn(name = "questionId")
     private Question question;
-
-    public Long getAnswerId() {
-        return answerId;
-    }
-
-    public void setAnswerId(Long answerId) {
-        this.answerId = answerId;
-    }
+    
 
     public String getOptionText() {
         return optionText;
@@ -46,10 +38,6 @@ public class Answer {
 
     public boolean isCorrect() {
         return isCorrect;
-    }
-
-    public int getCorrectOption() {
-        return isCorrect ? 1 : 0;
     }
 
     public void setCorrect(boolean isCorrect) {
