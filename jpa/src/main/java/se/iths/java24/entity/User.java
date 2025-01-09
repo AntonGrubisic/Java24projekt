@@ -12,9 +12,6 @@ public class User {
     @Column(nullable = false)
     private String userName;
 
-//    @Column
-//    private Integer userScore;
-
     @Column (nullable = false)
     private String userCountry;
 
@@ -37,14 +34,6 @@ public class User {
     public void setUserCountry(String userCountry){
         this.userCountry = userCountry;
     }
-
-//    public Integer getUserScore(){
-//        return userScore;
-//    }
-//
-//    public void setUserScore(Integer userScore) {
-//        this.userScore = userScore;
-//    }
 
     @Override
     public String toString() {
