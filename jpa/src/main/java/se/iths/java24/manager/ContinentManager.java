@@ -4,10 +4,8 @@ import jakarta.persistence.EntityManager;
 import se.iths.java24.entity.Continent;
 import se.iths.java24.entity.Country;
 import se.iths.java24.entity.Question;
-
 import java.util.List;
 import java.util.Scanner;
-
 import static se.iths.java24.JPAUtil.inTransaction;
 
 public class ContinentManager {
@@ -52,7 +50,7 @@ public class ContinentManager {
             System.out.println("Ingen kontinent hittades med det angivna ID.");
             return;
         }
-        //Uppdatera koden nedan...
+
         System.out.print("Ange nytt namn för kontinenten (nuvarande: " + continent.getContinentName() + "): ");
         String newName = scanner.nextLine();
         System.out.print("Ange ny mängd länder (nuvarande: " + continent.getCountriesAmount() + "): ");

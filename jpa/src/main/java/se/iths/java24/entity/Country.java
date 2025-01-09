@@ -21,7 +21,7 @@ public class Country {
     @Column(name = "continentId")
     private Integer continentId;
 
-    // Getters and Setters
+
     public int getCountryId() {
         return countryId;
     }

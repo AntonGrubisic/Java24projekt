@@ -35,14 +35,14 @@ public class UserManager {
         """);
     }
 
-    //Read
+
     public static void showUsers(EntityManager em) {
         var query = em.createQuery("SELECT u FROM User u", se.iths.java24.entity.User.class);
         var users = query.getResultList();
         users.forEach(System.out::println);
     }
 
-    //Create
+
     public static void addUser(EntityManager em, Scanner scanner) {
         System.out.println("Skriv in ditt namn: ");
         String name = scanner.nextLine();
@@ -57,7 +57,7 @@ public class UserManager {
         });
     }
 
-    //Update
+
     public static void updateUser(EntityManager em, Scanner scanner) {
         System.out.println("Skriv in ditt id: ");
         Long userId = scanner.nextLong();
@@ -79,7 +79,7 @@ public class UserManager {
         });
     }
 
-    //Delete
+
     public static void deleteUser(EntityManager em, Scanner scanner) {
         System.out.println("Skriv in ditt ID: ");
         Long userId = scanner.nextLong();

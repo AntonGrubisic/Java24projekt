@@ -5,7 +5,6 @@ import se.iths.java24.entity.Answer;
 import se.iths.java24.entity.Question;
 import se.iths.java24.entity.User;
 import java.util.Scanner;
-
 import static se.iths.java24.JPAUtil.inTransaction;
 
 public class ContinentQuizManager {

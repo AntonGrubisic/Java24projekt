@@ -17,7 +17,7 @@ public class Question {
     @OneToMany (mappedBy = "question")
     private List<Answer> answers;
 
-    // Getters and setters
+
     public Long getQuestionId() {
         return questionId;
     }

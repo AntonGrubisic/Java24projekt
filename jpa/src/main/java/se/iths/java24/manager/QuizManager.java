@@ -3,10 +3,8 @@ package se.iths.java24.manager;
 import jakarta.persistence.EntityManager;
 import se.iths.java24.entity.Answer;
 import se.iths.java24.entity.Question;
-
 import java.util.List;
 import java.util.Scanner;
-
 import static se.iths.java24.JPAUtil.inTransaction;
 import static se.iths.java24.JPAUtil.setForeignKeyChecks;
 
@@ -146,14 +144,14 @@ public class QuizManager {
         inTransaction(entityManager -> {
             Question question = entityManager.find(Question.class, questionId);
             if (question != null) {
-                // Uppdatera frågetext
+
                 System.out.println("Skriv in den nya frågan: ");
                 String newQuestionText = scanner.nextLine();
                 question.setQuestionText(newQuestionText);
                 entityManager.merge(question);
                 System.out.println("Frågan har uppdaterats.");
 
-                // Hämta och uppdatera svarsalternativ
+
                 List<Answer> answers = entityManager.createQuery(
                                 "SELECT a FROM Answer a WHERE a.question = :question", Answer.class)
                         .setParameter("question", question)
@@ -171,7 +169,7 @@ public class QuizManager {
                     }
                 }
 
-                // Uppdatera korrekt svar
+
                 System.out.print("Ange vilket svar som är korrekt (1-" + answers.size() + "): ");
                 int correctOption = scanner.nextInt();
                 scanner.nextLine();
@@ -197,7 +195,6 @@ public class QuizManager {
         inTransaction(entityManager -> {
             Question question = entityManager.find(Question.class, questionId);
             if (question != null) {
-                // Hämta och ta bort alla kopplade svar
                 setForeignKeyChecks(em, false);
                 List<Answer> answers = entityManager.createQuery(
                                 "SELECT a FROM Answer a WHERE a.question = :question", Answer.class)
@@ -208,7 +205,7 @@ public class QuizManager {
                     entityManager.remove(answer); // Ta bort varje svar
                 }
 
-                // Ta bort själva frågan
+
                 entityManager.remove(question);
                 System.out.println("Fråga och dess svar har raderats.");
                 setForeignKeyChecks(em, true);
