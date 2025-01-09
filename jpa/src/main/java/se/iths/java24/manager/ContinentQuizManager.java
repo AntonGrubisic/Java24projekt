@@ -87,7 +87,6 @@ public class ContinentQuizManager {
         inTransaction(entityManager -> {
             User user = entityManager.find(User.class, userId);
             if (user != null) {
-                //user.setUserScore(finalScore);
                 System.out.println("Dina poäng har uppdaterats");
             } else {
                 System.out.println("Ingen användare hittades med ID: " + userId);
@@ -123,7 +122,6 @@ public class ContinentQuizManager {
         scanner.nextLine();
         Answer answer = new Answer();
         answer.setQuestion(question);
-        //answer.setOptionText(newAnswer);
         answer.setCorrect(isCorrect);
 
         inTransaction(entityManager -> entityManager.persist(answer));

@@ -48,11 +48,9 @@ public class UserManager {
         String name = scanner.nextLine();
         System.out.println("Skriv in ditt land: ");
         String country = scanner.nextLine();
-        //int score = 0;
         se.iths.java24.entity.User user = new se.iths.java24.entity.User();
         user.setUserName(name);
         user.setUserCountry(country);
-        //user.setUserScore(0);
 
         inTransaction(entityManager -> {
             entityManager.persist(user);
