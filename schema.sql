@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Country (
     countryName VARCHAR(255) UNIQUE,
     countryPopulation INTEGER,
     countryCapital VARCHAR(255),
-    countryLandmark VARCHAR(255),
+    landmark VARCHAR(255),
     continentId INTEGER NOT NULL,
     FOREIGN KEY (continentId) REFERENCES Continent(continentId)
 );
@@ -66,7 +66,7 @@ VALUES
         ('Nordamerika',23, 24500000),
         ('Sydamerika',12, 17840000);
 
-INSERT INTO Country (countryname, countryCapital, countryPopulation, countryLandmark, continentId)
+INSERT INTO Country (countryname, countryCapital, countryPopulation, landmark, continentId)
 VALUES
     ('Albanien', 'Tirana', 2800000, 'Berat', 1),
     ('Andorra', 'Andorra la Vella', 77000, 'Caldea Spa', 1),
